@@ -13,12 +13,10 @@ def get_links(url, prefix="", contains=""):
 	try:
 		page = urlopen(req)
 		soup = BeautifulSoup(page, features="html5lib")
-		# print([a.get('href') for a in soup.find_all('a', href=True)])
 		# all links in each page related to the pdfs
 		links = []
 		for link in soup.find_all('a'):
 			href = link.get('href')
-			# print("hiii+++:" + href)
 			if contains in href:
 				links.append(prefix + href)
 	except:
@@ -46,15 +44,12 @@ download_prefix = "https://ww2.eagle.org/content/eagle/en/rules-and-resources/ru
 
 
 pages_with_links = []
-# print(len(hrefs))
 for row in hrefs:
-	# print(row.split("html#")[1])
 	pages_with_links.append(download_prefix+row.split("html#")[1])
 
 pdf_links_lst = []
 for i in range(len(pages_with_links)):
 	pdf_links_lst.append(get_links(pages_with_links[i], prefix='https://ww2.eagle.org/', contains='.pdf'))
-
 
 pdf_links = []
 for page_lst in pdf_links_lst:
